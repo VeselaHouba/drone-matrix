@@ -1,14 +1,34 @@
 def main(ctx):
   return [
-    step("debian-10"),
-    step("ubuntu-18.04"),
-    step("ubuntu-20.04")
+    step_lint(),
+    step_hetzner("debian-10"),
+    step_hetzner("ubuntu-18.04"),
+    step_hetzner("ubuntu-20.04")
   ]
 
-def step(os):
+def step_lint():
+  return {
+    "kind": "pipeline",
+    "name": "linter",
+    "steps": [
+      {
+        "name": "Lint",
+        "image": "veselahouba/molecule",
+        "commands": [
+          "shellcheck_wrapper",
+          "flake8",
+          "yamllint .",
+          "ansible-lint"
+        ]
+      }
+    ]
+  }
+
+def step_hetzner(os):
   return {
     "kind": "pipeline",
     "name": "molecule-%s" % os,
+    "depends_on": "linter",
     "steps": [
       {
         "name": "Lint",
