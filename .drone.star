@@ -74,9 +74,12 @@ def step_hetzner(os):
   }
 
 def step_publish(oses):
+  deps = []
+  for os in oses:
+    deps.append("molecule-%s" % os)
   return {
     "kind": "pipeline",
-    "depends_on": oses,
+    "depends_on": deps,
     "name": "publish",
     "steps": [
         {
