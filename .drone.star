@@ -14,7 +14,6 @@ def main(ctx):
   # publish pipeline with molecule as dependencies
   if ctx.build.event == "tag":
     pipelines.append(step_publish(oses))
-  pipelines.append(step_publish(oses))
   return pipelines
 
 def step_lint():
