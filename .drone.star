@@ -27,8 +27,10 @@ def step_lint():
 def step_hetzner(os):
   return {
     "kind": "pipeline",
+    "depends_on": [
+        "linter",
+    ],
     "name": "molecule-%s" % os,
-    "depends_on": "linter",
     "steps": [
       {
         "name": "Lint",
