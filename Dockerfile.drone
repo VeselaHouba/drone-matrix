@@ -1,0 +1,8 @@
+FROM debian:10
+RUN \
+  apt update && \
+  apt -y install curl
+RUN \
+  curl -L https://github.com/drone/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz | tar zx && \
+  install -t /usr/local/bin drone
+ENTRYPOINT ["/usr/local/bin/drone"]
